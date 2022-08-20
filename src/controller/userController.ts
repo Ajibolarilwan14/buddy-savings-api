@@ -1,11 +1,17 @@
 import { Request, Response, NextFunction } from 'express';
-import  { getUser } from '../services/User';
+import  { registerUser } from '../services/User';
 
-export const getAllUser = ((req: Request, res: Response) => {
+export const register = ((req: Request, res: Response) => {
     try {
-        const user = getUser(req.body.email, req.body.firstName, req.body.lastName, req.body.password);
+        const user = registerUser(req.body.email, req.body.firstName, req.body.lastName, req.body.password);
+
+        if (!user) res.status(400).send({
+            message: "Something went wrong"
+        });
     
-        res.json(user).status(201);
+        res.status(201).send({
+            user
+        })
         
     } catch (error) {
         res.json(error).status(400);

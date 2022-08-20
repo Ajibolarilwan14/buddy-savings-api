@@ -19,6 +19,6 @@ export class Users {
     email: string
 
     @Column()
-        @Length(8, 16)
+        @Length(8, 255)
     password: string
 }
