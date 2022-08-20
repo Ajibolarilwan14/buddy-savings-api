@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import { Users } from '../entity/User';
 import { AppDataSource } from '../data-source';
 import { validate } from 'class-validator';
-import { authToken } from '../helpers/generateAuthToken';
+import IUser from '../interfaces/user';
 
 const userRepository = AppDataSource.getRepository(Users);
 
@@ -14,12 +14,11 @@ export const registerUser = (async (email, firstName, lastName, password) => {
 
     if(existingUser) throw new Error("User already exist!");
     
-
     const newUser = new Users();
     newUser.email = email;
     newUser.firstName = firstName,
     newUser.lastName = lastName;
-    newUser.password = bcrypt.hashSync(password, 10);
+    newUser.password = bcrypt.hashSync(password, 10);    
 
     const errors = await validate(newUser);
     if (errors.length > 0) {
@@ -27,6 +26,8 @@ export const registerUser = (async (email, firstName, lastName, password) => {
         
     }else{
         await userRepository.manager.save(newUser);
+
+        delete newUser.password;
 
         return newUser;
     }
@@ -43,9 +44,6 @@ export const loginUser = (async (email, password) => {
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) throw new Error("Email/password is incorrect!");
-
-    // const token = await authToken(user);
-    // console.log(token);
     
 
     return user;
