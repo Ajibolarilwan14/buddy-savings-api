@@ -1,23 +1,33 @@
+import { authToken } from './../helpers/generateAuthToken';
 import { Request, Response, NextFunction } from 'express';
-import  { registerUser } from '../services/User';
+import  { registerUser, loginUser } from '../services/User';
 
-export const register = ((req: Request, res: Response) => {
+export const register = (async(req: Request, res: Response) => {
     try {
-        const user = registerUser(req.body.email, req.body.firstName, req.body.lastName, req.body.password);
+        const user = await registerUser(req.body.email, req.body.firstName, req.body.lastName, req.body.password);
+        const token = authToken(user);
 
-        if (!user) res.status(400).send({
-            message: "Something went wrong"
-        });
-    
         res.status(201).send({
-            user
-        })
+            user,
+            token
+        });
         
     } catch (error) {
-        res.json(error).status(400);
+        res.status(400).send(error);
     }
 });
 
-export const home = ((req: Request, res: Response) => {
-    res.send("Lets go!!!");
+export const login = (async(req: Request, res: Response) => {
+    try {
+        const user = await loginUser(req.body.email, req.body.password);
+        const token = authToken(user);
+       
+        res.status(200).send({
+            user,
+            token
+        });
+
+    } catch (error) {
+        res.status(400).send(error);
+    }
 });
