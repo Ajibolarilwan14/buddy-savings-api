@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { BuddySavings } from './BuddySavings';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { IsEmail, Length } from 'class-validator';
 
 @Entity()
@@ -21,4 +22,7 @@ export class Users {
     @Column()
         @Length(8, 255)
     password: string
+
+    @OneToMany(() => BuddySavings, (buddysavings) => buddysavings.users)
+    buddySavings: BuddySavings[]
 }

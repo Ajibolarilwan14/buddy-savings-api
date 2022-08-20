@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Users } from './User';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { Length } from 'class-validator';
 
 @Entity()
@@ -43,4 +44,7 @@ export class BuddySavings {
 
     @Column("simple-array")
     buddies: string[]
+
+    @ManyToOne(() => Users, (user) => user.buddySavings)
+    users: Users
 }
