@@ -23,6 +23,6 @@ export class Users {
         @Length(8, 255)
     password: string
 
-    @OneToMany(() => BuddySavings, (buddysavings) => buddysavings.users)
+    @OneToMany(() => BuddySavings, (buddysavings) => buddysavings.user)
     buddySavings: BuddySavings[]
 }

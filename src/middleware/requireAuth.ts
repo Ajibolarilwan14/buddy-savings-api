@@ -5,7 +5,7 @@ import { Users } from '../entity/User';
 
 const userRepository = AppDataSource.getRepository(Users);
 
-export const requireAuth = (async (req: Request, res: Response, NextFunction) => {
+export const requireAuth = (async (req: Request, res: Response, next: NextFunction) => {
     try {
         const token = req.header('Authorization').replace('Bearer ', '');
         const decodedJWT = jwt.verify(token, process.env.JWT_SECRET);
@@ -15,12 +15,15 @@ export const requireAuth = (async (req: Request, res: Response, NextFunction) =>
 
         if (!user) throw new Error();
 
-        let request = { token, user };
+        // let request = { token, user };
 
-        request.token = token;
-        request.user = user;
+        delete user.password;
+        // @ts-ignore
+        req.token = token;
+        // @ts-ignore
+        req.user = user;
 
-        NextFunction();
+        next();
 
     } catch (error) {
         res.status(401).send({

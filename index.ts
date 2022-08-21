@@ -15,8 +15,8 @@ app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(mg('dev'));
-app.use('/api', userRouter);
-app.use('/api', buddySavingsRouter);
+app.use('/api/user', userRouter);
+app.use('/api/buddysavings', buddySavingsRouter);
 const db = AppDataSource;
 
 

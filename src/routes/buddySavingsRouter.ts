@@ -4,7 +4,7 @@ import express from 'express';
 
 const Router = express.Router();
 
-Router.post('/buddysavings/create', requireAuth, createBuddySavings);
+Router.post('/create', requireAuth, createBuddySavings);
 
 
 

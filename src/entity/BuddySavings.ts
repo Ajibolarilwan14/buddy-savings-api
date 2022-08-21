@@ -12,11 +12,11 @@ export class BuddySavings {
     title: string
 
     @Column()
-        @Length(1, 5)
+    // @Length(1, 5)
     no_of_friends: number
 
     @Column()
-    do_you_or_your_buddies_have_a_target: string
+    do_you_or_your_buddies_have_a_target: boolean
 
     @Column()
     target: number
@@ -42,9 +42,9 @@ export class BuddySavings {
     @Column()
     relationship_with_buddies: string
 
-    @Column("simple-array")
+    @Column("simple-json")
     buddies: string[]
 
     @ManyToOne(() => Users, (user) => user.buddySavings)
-    users: Users
+    user: Users
 }

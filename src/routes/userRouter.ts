@@ -3,8 +3,9 @@ import { register, login } from '../controller/userController';
 
 const Router = express.Router();
 
-Router.post('/user/register', register);
-Router.post('/user/login', login);
+Router.post('/register', register);
+Router.post('/login', login);
+Router.get('/buddysavings')
 
 
 export default Router;
