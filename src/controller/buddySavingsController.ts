@@ -31,3 +31,11 @@ export const createBuddySavings = (async (req: Request, res: Response) => {
     // @ts-ignore
     // res.send(req.user);
 });
+
+export const editBuddySavings = (() => {
+
+});
+
+export const deleteBuddySavings = (() => {
+    
+})
