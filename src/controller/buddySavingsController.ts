@@ -1,16 +1,14 @@
-import { editSavings, fetchASavings } from './../services/BuddySavings';
+import { editSavings, fetchASavings, approveInvitation, rejectAnInvitation } from "./../services/BuddySavings";
 import { testEmail } from "./../emails/buddySavings";
 import { createSavings, deleteSavings } from "../services/BuddySavings";
 import { Request, Response } from "express";
 
 export const createBuddySavings = async (req: Request, res: Response) => {
+  const details = {
+    ...req.body,
+  };
+  console.log(details);
 
-    const details = {
-        ...req.body
-    }
-    console.log(details);
-    
-    
   try {
     // @ts-ignore
     const savings = await createSavings(details, req.user);
@@ -26,18 +24,17 @@ export const createBuddySavings = async (req: Request, res: Response) => {
 };
 
 export const editBuddySavings = async (req: Request, res: Response) => {
-    const details = {
-      ...req.body
-    };
+  const details = {
+    ...req.body,
+  };
 
-    try {
-        const savings = editSavings(req.params.id, details);
-        
-        res.send(savings);
-    } catch (error) {
-        res.status(500).send(error);
-    }
+  try {
+    const savings = editSavings(req.params.id, details);
 
+    res.send(savings);
+  } catch (error) {
+    res.status(500).send(error);
+  }
 };
 
 export const deleteBuddySavings = async (req: Request, res: Response) => {
@@ -52,11 +49,24 @@ export const deleteBuddySavings = async (req: Request, res: Response) => {
 };
 
 export const getSingleSaving = async (req: Request, res: Response) => {
-    try {
-        const savings = await fetchASavings(req.params.id);
+  try {
+    const savings = await fetchASavings(req.params.id);
 
-        res.send(savings);
-    } catch (error) {
-        res.status(500).send(error)
-    }
-}
+    res.send(savings);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+export const acceptInvitation = async (req: Request, res: Response) => {
+    // @ts-ignore
+    const accept = await approveInvitation(req.user, req.params.id);
+    
+    // todo - send an email to the user(budddy savings creator)
+
+    return accept;
+};
+
+export const rejectInvitation = async () => {
+    // send an email to the user
+};

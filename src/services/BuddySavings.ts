@@ -35,7 +35,7 @@ export const createSavings = async (details, user) => {
 export const editSavings = async (id, details) => {
   const savings = await buddySavingsRepository.findOneBy({
     // @ts-ignore
-    userId: id
+    userId: id,
   });
 
   savings.title = details.title;
@@ -50,7 +50,6 @@ export const editSavings = async (id, details) => {
   savings.start_date = details.start_date;
   savings.start_when = details.start_when;
   savings.buddies = details.buddies;
-  
 
   await buddySavingsRepository.manager.save(savings);
 
@@ -58,21 +57,31 @@ export const editSavings = async (id, details) => {
 };
 
 export const deleteSavings = async (id, userId) => {
-    const savings = await buddySavingsRepository.findOneByOrFail({
-        id,
-        // @ts-ignore
-        userId
-    });
+  const savings = await buddySavingsRepository.findOneByOrFail({
+    id,
+    // @ts-ignore
+    userId,
+  });
 
-    await buddySavingsRepository.remove(savings);
+  await buddySavingsRepository.remove(savings);
 
-    return savings;
+  return savings;
 };
 
 export const fetchASavings = async (id) => {
   const savings = await buddySavingsRepository.findOneByOrFail({
-    id
+    id,
   });
 
-  return savings
+  return savings;
+};
+
+export const approveInvitation = async (user, id) => {
+  user.buddy_savingsId = id;
+
+  return user;
+}
+
+export const rejectAnInvitation = async (user) => {
+  // todo - send an email to the user(buddy savings creator)
 }
