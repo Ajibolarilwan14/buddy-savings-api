@@ -49,3 +49,19 @@ export const loginUser = (async (email, password) => {
 
     return user;
 });
+
+export const getSavings = (async (id) => {
+    const savings = await userRepository.find({
+        where: {
+            id
+        },
+        relations: {
+            buddySavings: true
+        }
+    });
+
+    // @ts-ignore
+    delete savings.password;
+
+    return savings;
+});
