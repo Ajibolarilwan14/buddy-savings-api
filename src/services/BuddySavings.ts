@@ -34,7 +34,8 @@ export const createSavings = async (details, user) => {
 
 export const editSavings = async (id, details) => {
   const savings = await buddySavingsRepository.findOneBy({
-    id,
+    // @ts-ignore
+    userId: id
   });
 
   savings.title = details.title;
@@ -49,6 +50,7 @@ export const editSavings = async (id, details) => {
   savings.start_date = details.start_date;
   savings.start_when = details.start_when;
   savings.buddies = details.buddies;
+  
 
   await buddySavingsRepository.manager.save(savings);
 
@@ -66,3 +68,11 @@ export const deleteSavings = async (id, userId) => {
 
     return savings;
 };
+
+export const fetchASavings = async (id) => {
+  const savings = await buddySavingsRepository.findOneByOrFail({
+    id
+  });
+
+  return savings
+}

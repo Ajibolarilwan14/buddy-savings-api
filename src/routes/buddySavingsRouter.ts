@@ -1,13 +1,13 @@
 import { requireAuth } from './../middleware/requireAuth';
-import { createBuddySavings, editBuddySavings, deleteBuddySavings } from './../controller/buddySavingsController';
+import { createBuddySavings, editBuddySavings, deleteBuddySavings, getSingleSaving } from './../controller/buddySavingsController';
 import express from 'express';
 
 const Router = express.Router();
 
-Router.route('/savings')
-    .post(requireAuth, createBuddySavings)
-    .patch(requireAuth, editBuddySavings)
-    .delete(requireAuth, deleteBuddySavings);
+Router.post('/create', requireAuth, createBuddySavings);
+Router.patch('/edit/:id', requireAuth, editBuddySavings);
+Router.delete('/delete:id', requireAuth, deleteBuddySavings);
+Router.get('/savings/:id', requireAuth, getSingleSaving)
 
 
 

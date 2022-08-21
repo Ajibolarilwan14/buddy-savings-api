@@ -12,7 +12,6 @@ export class BuddySavings {
   title: string;
 
   @Column()
-  // @Length(1, 5)
   no_of_friends: number;
 
   @Column()
@@ -42,8 +41,8 @@ export class BuddySavings {
   @Column()
   relationship_with_buddies: string;
 
-  @Column("simple-json")
-  buddies: string[];
+  @Column()
+  buddies: string;
 
   @ManyToOne(() => Users, (user) => user.buddySavings)
   user: Users;
