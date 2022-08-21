@@ -1,3 +1,4 @@
+import { BuddySavings } from './../entity/BuddySavings';
 import { DataSource } from 'typeorm';
 import { Users } from '../entity/User';
 
@@ -7,7 +8,7 @@ export const AppDataSource = new DataSource({
     username: process.env.DATABASE_USER,
     password: process.env.DATABASE_PASSWORD,
     database: process.env.DATABASE_DB,
-    entities: [Users]
+    entities: [Users, BuddySavings]
 });
 
 AppDataSource.initialize()

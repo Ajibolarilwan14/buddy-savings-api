@@ -45,6 +45,7 @@ export const loginUser = (async (email, password) => {
 
     if (!isMatch) throw new Error("Email/password is incorrect!");
     
+    delete user.password;
 
     return user;
 });

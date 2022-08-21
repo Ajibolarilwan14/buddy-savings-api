@@ -15,13 +15,16 @@ export const requireAuth = (async (req: Request, res: Response, NextFunction) =>
 
         if (!user) throw new Error();
 
-        req.token = token;
-        req.user = user;
+        let request = { token, user };
+
+        request.token = token;
+        request.user = user;
+
         NextFunction();
 
     } catch (error) {
         res.status(401).send({
-            message: "Please sign in to continue"
+            message: "Please, sign in to continue"
         });
     }
 })
